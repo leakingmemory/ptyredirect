@@ -102,7 +102,30 @@ int main(int argc, char **argv) {
                     if (buf[i] == '\r') {
                         std::string line{};
                         line.append(buf + s, i - s);
-                        std::cout << "> " << line << "\n";
+                        std::cout << "bin> ";
+                        for (int i = 0; i < line.size(); i++) {
+                            /*if ((line[i] < '0' || line[i] > '9') && (line[i] < 'a' || line[i] > 'z') || (line[i] < 'A' || line[i] > 'Z') && line[i] != ' ' && line[i] != '.' && line[i] != ',' && line[i] != ':' && line[i] != ';' && line[i] != '\'' && line[i] != '"' && line[i] != '#') {
+                                line[i] = '?';
+                            }*/
+                            unsigned char c = line[i];
+                            unsigned char c1 = c >> 4;
+                            unsigned char c2 = c & 0x0F;
+                            char ch[3];
+                            ch[2] = '\0';
+                            if (c1 < 10) {
+                                ch[0] = ('0' + c1);
+                            } else {
+                                ch[0] = ('A' + c1 - 10);
+                            }
+                            if (c2 < 10) {
+                                ch[1] = ('0' + c2);
+                            } else {
+                                ch[1] = ('A' + c2 - 10);
+                            }
+                            std::cout << " " << ch;
+                        }
+                        std::cout << "\n";
+                        //std::cout << "> " << line << "\n";
                         s = i + 1;
                     }
                 }
